@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<companies>
+	<company>
+		<id>11</id>
+		<name>first</name>
+		<age>1</age>
+		<address>bla</address>
+		<salary>1111</salary>
+	</company>
+	<company>
+		<id>12</id>
+		<name>second</name>
+		<age>22</age>
+		<address>blub</address>
+		<salary>2222</salary>
+	</company>
+	<company>
+		<id>13</id>
+		<name>third</name>
+		<age>33</age>
+		<address>hello</address>
+		<salary>333</salary>
+	</company>
+	<company>
+		<id>14</id>
+		<name>fourth</name>
+		<age>44</age>
+		<address>here</address>
+		<salary>44.44</salary>
+	</company>
+</companies>

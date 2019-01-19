@@ -1,0 +1,67 @@
+---
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+whitelistObjectNames: 
+ # Whitelist objects to be collected, for performance reason
+ # see https://github.com/prometheus/jmx_exporter/issues/246#issuecomment-367573931
+ # Each object in the rules below has to be added to whitelistObjectNames too !
+ # note that rules use regex (like "foo.*", whereas the whitelist use globbing expressions (like "foo*")
+ - "org.apache.activemq.artemis:*"
+ - "jboss.as:subsystem=transactions*"
+ - "jboss.as:subsystem=undertow,server=*,http-listener=*"
+ - "org.apache.camel:*"
+ # - "java.lang:*"
+rules:
+  - pattern: "^org.apache.activemq.artemis<broker=\"(.+)\"><>(connection_count|total_connection_count|total_consumer_count):"
+    attrNameSnakeCase: true
+    name: jms_broker_connections
+    labels:
+      value: $2
+
+  - pattern: "^org.apache.activemq.artemis<broker=\"(.+)\"><>(address_memory_usage|global_max_size):"
+    attrNameSnakeCase: true
+    name: jms_broker_memory
+    labels:
+      value: $2
+
+  - pattern: "^org.apache.activemq.artemis<broker=\"(.+)\",\\s*component=addresses,\\s*address=\"(.+)\"><>(address_size):"
+    attrNameSnakeCase: true
+    name: jms_address_size
+    labels:
+        address: $2
+        value: $3
+
+  - pattern: "^org.apache.activemq.artemis<broker=\"(.+)\",\\s*component=addresses,\\s*address=\"(.+)\"><>(message_count):"
+    attrNameSnakeCase: true
+    name: jms_address_message_count
+    labels:
+        address: $2
+        value: $3
+        
+  - pattern: "^org.apache.activemq.artemis<broker=\"(.+)\",\\s*component=addresses,\\s*address=\"(.+)\",\\s*subcomponent=(queues|topics),\\s*routing-type=\"(.+)\",\\s*(queue|topic)=\"(.+)\"><>(message_count|messages_acknowledged|messages_added|messages_expired|messages_killed):"
+    attrNameSnakeCase: true
+    name: $5_$6
+    labels:
+        value: $7
+
+  - pattern: "^jboss.as<subsystem=transactions><>number_of_(.+):"
+    attrNameSnakeCase: true
+    name: transaction_$1
+
+  - pattern: "^jboss.as<subsystem=undertow, server=(.+), http-listener=(.+)><>(error_count|processing_time|request_count):"
+    attrNameSnakeCase: true
+    name: undertow_$3
+    labels:
+      server: $1
+      http_listener: $2
+
+  - pattern: '^org.apache.camel<context=(.+), type=routes, name=\"(.+)\"><>((?:Min|Mean|Max|Last)(?:ProcessingTime)):'
+    name: $1_$2_processing_time
+    labels:
+      value: $3 
+
+  - pattern: '^org.apache.camel<context=(.+), type=routes, name=\"(.+)\"><>((?:Exchanges(?:Completed|Failed|Inflight|Total))|FailuresHandled):'
+    type: COUNTER
+    name: $1_$2_exchanges
+    labels:
+      value: $3 

@@ -1,0 +1,23 @@
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+
+	<datasource
+		jndi-name="${datasource.jndi}"
+		pool-name="postgres-ds">
+
+		<driver>postgres</driver>
+		<driver-class>org.postgresql.Driver</driver-class>
+
+		<connection-url>${datasource.url}</connection-url>
+
+
+		<pool>
+			<max-pool-size>5</max-pool-size>
+		</pool>
+
+		<security>
+			<user-name>${datasource.user}</user-name>
+			<password>${datasource.pw}</password>
+		</security>
+
+	</datasource>
+</datasources>

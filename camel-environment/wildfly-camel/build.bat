@@ -1,0 +1,1 @@
+call docker build --tag=stone/wildfly-camel:1.0.0 .

@@ -1,0 +1,1 @@
+call docker build --tag=stone/wildfly-prometheus:1.0.0 .
