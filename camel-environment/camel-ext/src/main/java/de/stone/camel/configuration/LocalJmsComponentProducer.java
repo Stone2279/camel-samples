@@ -8,7 +8,7 @@ import javax.jms.ConnectionFactory;
 
 import org.apache.camel.component.jms.JmsComponent;
 
-public class JmsComponentProducer {
+public class LocalJmsComponentProducer {
 
 	@Resource(mappedName = "java:jboss/DefaultJMSConnectionFactory")
 	private ConnectionFactory connectionFactory;
@@ -16,11 +16,18 @@ public class JmsComponentProducer {
 	@Produces
 	@ApplicationScoped
     @Named("jmsLocal")
-	public JmsComponent configuredJmsCompponent()
+	public JmsComponent produceLocalJmsComponent()
 	{
 		JmsComponent component = new JmsComponent();
         component.setConnectionFactory(connectionFactory);
 
         return component;
+	}
+	
+	@Produces
+    @Named("jmsLocalNoTx")
+	public JmsComponent produceLocalNoTxJmsComponent()
+	{
+        return JmsComponent.jmsComponent(connectionFactory);
 	}
 }

@@ -77,6 +77,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>de.stone.camel</groupId>
+			<artifactId>camel-ext</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
