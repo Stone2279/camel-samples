@@ -7,6 +7,7 @@ import javax.inject.Named;
 import javax.jms.ConnectionFactory;
 
 import org.apache.camel.component.jms.JmsComponent;
+import org.springframework.transaction.PlatformTransactionManager;
 
 public class LocalJmsComponentProducer {
 
@@ -16,12 +17,9 @@ public class LocalJmsComponentProducer {
 	@Produces
 	@ApplicationScoped
     @Named("jmsLocal")
-	public JmsComponent produceLocalJmsComponent()
+	public JmsComponent produceLocalJmsComponent(PlatformTransactionManager transactionManager)
 	{
-		JmsComponent component = new JmsComponent();
-        component.setConnectionFactory(connectionFactory);
-
-        return component;
+		return JmsComponent.jmsComponentTransacted(connectionFactory, transactionManager);
 	}
 	
 	@Produces

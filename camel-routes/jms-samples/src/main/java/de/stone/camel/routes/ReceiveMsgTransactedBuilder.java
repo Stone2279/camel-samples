@@ -23,7 +23,7 @@ public class ReceiveMsgTransactedBuilder extends RouteBuilder
 		JAXBContext jaxbContext = JAXBContext.newInstance(SomeData.class);
 		DataFormat jaxb = new JaxbDataFormat(jaxbContext);
 		
-		from("jmsLocal:queue:{{receivemsg.tx.queue.name}}")   
+		from("jmsLocal:queue:{{receivemsg.tx.queue.name}}?transacted=true")   
 		.routeId("jms-receive-tx-route")
         .autoStartup(true)
         
