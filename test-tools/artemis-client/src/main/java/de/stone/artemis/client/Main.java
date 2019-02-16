@@ -7,7 +7,7 @@ public class Main {
 		QueueMessageSender sender = new QueueMessageSender("localhost", 8080, "jmsuser", "jmsuser");
 		sender.connect("sampleTxQ");
 		
-		sender.sendMessage("<someData><someString>Runs fine</someString><someInt>12</someInt><someDouble>33.33</someDouble></someData>", 1000);
+		sender.sendMessage("<someData><someString>Runs fine</someString><someInt>12</someInt><someDouble>33.33</someDouble></someData>", 10000);
 		
 		sender.close();
 	}

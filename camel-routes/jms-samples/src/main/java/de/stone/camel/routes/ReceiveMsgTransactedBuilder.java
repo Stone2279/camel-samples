@@ -32,6 +32,8 @@ public class ReceiveMsgTransactedBuilder extends RouteBuilder
         .choice()
     		.when(simple("${body.someString} == 'Fail'"))
     			.throwException(new IllegalArgumentException("Someone told me to fail"))
+    		.otherwise()
+    			.log("Success")
     	.end();
 	}
 
